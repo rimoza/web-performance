@@ -123,7 +123,11 @@ const sections = [
     content: [
       {
         type: "text",
-        text: "Web Performance refers to how fast a website loads and how efficiently it operates for users. Good performance is crucial because it impacts user experience, search rankings, and the overall success of a website."
+        text: "Website performance optimization is the process of making web pages load and run faster by improving the efficiency of the front-end code."
+      },
+      {
+        type: "text",
+        text: "This process involves a variety of techniques and strategies aimed at reducing page load times, enhancing user experience, and improving overall site performance."
       },
       {
         type: "text",
