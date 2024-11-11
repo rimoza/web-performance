@@ -1,6 +1,6 @@
 'use client'
 import React, { useState, useEffect } from 'react';
-import { ChevronRight, ChevronLeft, Menu, Book, Code, Image, Timer, TextSelect, Zap } from 'lucide-react';
+import { ChevronRight, ChevronLeft, Menu, Book, Code, Image, Timer, TextSelect, Zap, Rocket } from 'lucide-react';
 
 // Progress bar component
 const ProgressBar = ({ progress }: {
@@ -367,6 +367,166 @@ img {
           "Preload critical fonts",
           "Limit font weights and variants",
           "Consider using system fonts for better performance"
+        ]
+      }
+    ]
+  },
+  {
+    title: "Next.js Performance Optimization Techniques",
+    icon: <Rocket className="text-indigo-500" size={24} />,
+    content: [
+      {
+        type: "text",
+        text: "Next.js offers powerful built-in features and optimization techniques that can significantly improve your web application's performance. Here's a comprehensive overview of these techniques and their benefits:"
+      },
+      {
+        type: "text",
+        text: "1. Server Components"
+      },
+      {
+        type: "list",
+        items: [
+          "Zero bundle size impact - components are executed on the server and don't add to the JavaScript sent to clients",
+          "Instant loading states while data fetching",
+          "Automatic code splitting without configuration",
+          "Direct database access without API layers",
+          "Better security by keeping sensitive data and logic on the server",
+          "Improved SEO with server-side rendering"
+        ]
+      },
+      {
+        type: "text",
+        text: "2. Automatic Image Optimization"
+      },
+      {
+        type: "list",
+        items: [
+          "Automatic image resizing for different devices",
+          "Lazy loading by default for improved initial page load",
+          "Automatic conversion to modern formats like WebP and AVIF",
+          "Prevents Cumulative Layout Shift (CLS) with proper image dimensions",
+          "Built-in blur-up placeholder effect for better user experience",
+          "Optimized delivery through Next.js's built-in Image Optimization API"
+        ]
+      },
+      {
+        type: "text",
+        text: "3. Intelligent Routing and Navigation"
+      },
+      {
+        type: "list",
+        items: [
+          "Automatic route prefetching for faster subsequent page loads",
+          "Route groups for better code organization and loading",
+          "Parallel routes for simultaneous loading of multiple sections",
+          "Intercepting routes for modal-like experiences",
+          "Optional catch-all routes for dynamic handling",
+          "Automatic 404 handling without extra configuration"
+        ]
+      },
+      {
+        type: "text",
+        text: "4. Advanced Data Fetching"
+      },
+      {
+        type: "list",
+        items: [
+          "Incremental Static Regeneration (ISR) for dynamic content with static benefits",
+          "Automatic static optimization where possible",
+          "Request memoization to prevent duplicate data fetching",
+          "Streaming for progressive page loading",
+          "Parallel data fetching for improved performance",
+          "Built-in cache handling for optimal data freshness"
+        ]
+      },
+      {
+        type: "text",
+        text: "5. Script Optimization"
+      },
+      {
+        type: "list",
+        items: [
+          "Automatic code splitting for optimal loading",
+          "Smart script loading strategies (beforeInteractive, afterInteractive, lazyOnload)",
+          "Automatic defer loading of non-critical scripts",
+          "Built-in support for module/nomodule pattern",
+          "Optimized third-party script loading",
+          "Automatic inline script optimization"
+        ]
+      },
+      {
+        type: "text",
+        text: "6. Build Optimization"
+      },
+      {
+        type: "list",
+        items: [
+          "Automatic bundling and minification",
+          "Tree shaking for removing unused code",
+          "Efficient chunk splitting for better caching",
+          "Optimized production builds with reduced size",
+          "Automatic polyfill handling",
+          "Smart page revalidation strategies"
+        ]
+      },
+      {
+        type: "text",
+        text: "7. Edge Runtime Capabilities"
+      },
+      {
+        type: "list",
+        items: [
+          "Global edge network deployment for faster response times",
+          "Reduced server load with edge computing",
+          "Automatic region selection for optimal performance",
+          "Minimal cold starts with edge functions",
+          "Lower latency for dynamic operations",
+          "Improved scalability with distributed computing"
+        ]
+      },
+      {
+        type: "text",
+        text: "8. CSS and Font Optimization"
+      },
+      {
+        type: "list",
+        items: [
+          "Automatic CSS inlining for critical styles",
+          "Route-based CSS loading for reduced initial bundle",
+          "Built-in CSS modules support",
+          "Optimized font loading with next/font",
+          "Zero layout shift font loading",
+          "Automatic subset generation for fonts"
+        ]
+      },
+      {
+        type: "text",
+        text: "9. Middleware Optimization"
+      },
+      {
+        type: "list",
+        items: [
+          "Request-level performance optimization",
+          "Dynamic routing based on user context",
+          "Efficient A/B testing implementation",
+          "Streamlined authentication checks",
+          "Geographic-based content optimization",
+          "Request/response manipulation without server overhead"
+        ]
+      },
+      {
+        type: "text",
+        text: "10. Development Optimization"
+      },
+      {
+        type: "list",
+        items: [
+          "Fast Refresh for instant feedback during development",
+          "Built-in TypeScript support for better code quality",
+          "Automatic error reporting and handling",
+          "Development-specific performance optimizations",
+          "Integrated debugging tools",
+          "Built-in performance monitoring"
         ]
       }
     ]
