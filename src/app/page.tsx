@@ -1,6 +1,6 @@
 'use client'
 import React, { useState, useEffect } from 'react';
-import { ChevronRight, ChevronLeft, Menu, Book, Code, Image, Timer, TextSelect, Zap, Rocket } from 'lucide-react';
+import { ChevronRight, ChevronLeft, Menu, Book, Code, Image, Timer, TextSelect, Zap, Rocket, HardDrive } from 'lucide-react';
 
 // Progress bar component
 const ProgressBar = ({ progress }: {
@@ -161,6 +161,36 @@ const sections = [
     ]
   },
   {
+    title: "Core Web Vitals & Performance Metrics",
+    icon: <Zap className="text-yellow-500" size={24} />,
+    content: [
+      {
+        type: "text",
+        text: "Core Web Vitals are a set of specific factors that Google considers important in a webpage's overall user experience. Understanding and optimizing these metrics is crucial for both user experience and SEO performance."
+      },
+      {
+        type: "list",
+        items: [
+          "Largest Contentful Paint (LCP): Should occur within 2.5 seconds for a good user experience",
+          "First Input Delay (FID): Should be less than 100 milliseconds",
+          // "Cumulative Layout Shift (CLS): Should be less than 0.1",
+          "Time to Interactive (TTI): Should be under 5 seconds"
+        ]
+      },
+      // {
+      //   type: "text",
+      //   text: "Performance metrics are measured in two primary ways:"
+      // },
+      // {
+      //   type: "list",
+      //   items: [
+      //     "Lab Testing: Simulated page loads in controlled environments, crucial for testing new features before release",
+      //     "Field Testing (RUM): Real User Monitoring that measures actual user experiences in varying conditions"
+      //   ]
+      // }
+    ]
+  },
+  {
     title: "Lazy Loading Implementation",
     icon: <Code className="text-green-500" size={24} />,
     content: [
@@ -303,34 +333,24 @@ img {
     ]
   },
   {
-    title: "Core Web Vitals & Performance Metrics",
-    icon: <Zap className="text-yellow-500" size={24} />,
+    title: "Caching",
+    icon: <HardDrive className="text-orange-500" size={24} />,
     content: [
       {
         type: "text",
-        text: "Core Web Vitals are a set of specific factors that Google considers important in a webpage's overall user experience. Understanding and optimizing these metrics is crucial for both user experience and SEO performance."
+        text: "Caching is a technique that stores copies of files and data in a temporary storage location (cache) so they can be accessed more quickly in the future, reducing server load and improving application performance."
       },
       {
         type: "list",
         items: [
-          "Largest Contentful Paint (LCP): Should occur within 2.5 seconds for a good user experience",
-          "First Input Delay (FID): Should be less than 100 milliseconds",
-          // "Cumulative Layout Shift (CLS): Should be less than 0.1",
-          "Time to Interactive (TTI): Should be under 5 seconds"
+          "Faster page load times",
+          "Reduced server load and bandwidth usage",
+          "mproved user experience",
+          "Reduced costs for data transfer",
         ]
-      },
-      // {
-      //   type: "text",
-      //   text: "Performance metrics are measured in two primary ways:"
-      // },
-      // {
-      //   type: "list",
-      //   items: [
-      //     "Lab Testing: Simulated page loads in controlled environments, crucial for testing new features before release",
-      //     "Field Testing (RUM): Real User Monitoring that measures actual user experiences in varying conditions"
-      //   ]
-      // }
+      }
     ]
+
   },
   {
     title: "Web Font Optimization",
