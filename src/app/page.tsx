@@ -323,13 +323,13 @@ img {
       //   type: "text",
       //   text: "Performance metrics are measured in two primary ways:"
       // },
-      {
-        type: "list",
-        items: [
-          "Lab Testing: Simulated page loads in controlled environments, crucial for testing new features before release",
-          "Field Testing (RUM): Real User Monitoring that measures actual user experiences in varying conditions"
-        ]
-      }
+      // {
+      //   type: "list",
+      //   items: [
+      //     "Lab Testing: Simulated page loads in controlled environments, crucial for testing new features before release",
+      //     "Field Testing (RUM): Real User Monitoring that measures actual user experiences in varying conditions"
+      //   ]
+      // }
     ]
   },
   {
