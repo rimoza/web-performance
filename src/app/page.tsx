@@ -1,101 +1,390 @@
-import Image from "next/image";
+'use client'
+import React, { useState, useEffect } from 'react';
+import { ChevronRight, ChevronLeft, Menu, Book, Code, Image, Timer } from 'lucide-react';
 
-export default function Home() {
+// Progress bar component
+const ProgressBar = ({ progress }: {
+  progress: number;
+}) => (
+  <div className="fixed top-0 left-0 w-full h-1 bg-gray-200 z-50">
+    <div 
+      className="h-full bg-blue-500 transition-all duration-300 ease-out"
+      style={{ width: `${progress}%` }}
+    />
+  </div>
+);
+
+const TableOfContents = ({ sections, currentSection, onSectionChange }: 
+  {
+    sections: { title: string; icon: React.ReactNode }[];
+    currentSection: number;
+    onSectionChange: (index: number) => void;
+  }
+) => {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+    <div className="p-4 bg-white backdrop-blur-sm shadow-lg rounded-lg">
+      <h2 className="text-xl font-bold mb-4 flex items-center text-blue-600">
+        <Book className="mr-2" size={24} />
+        Table of Contents
+      </h2>
+      <nav>
+        <ul className="space-y-2">
+          {sections.map((section, index) => (
+            <li 
+              key={index}
+              className={`cursor-pointer p-3 rounded-lg transition-all duration-300
+                ${currentSection === index 
+                  ? 'bg-blue-100 text-blue-600 transform scale-105 font-medium shadow-md' 
+                  : 'hover:bg-gray-100 text-blue-600'}`}
+              onClick={() => onSectionChange(index)}
+            >
+              <div className="flex items-center">
+                {section.icon}
+                <span className="ml-2">{section.title}</span>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </nav>
     </div>
   );
+};
+
+const CodeBlock = ({ code, language }: 
+  {
+    code: string;
+    language: string;
+  }
+) => (
+  <pre className="bg-gray-800 text-white p-4 rounded-lg overflow-x-auto my-4 relative group">
+    <div className="absolute top-2 right-2 text-xs text-gray-400">{language}</div>
+    <code className="font-mono text-sm">{code}</code>
+  </pre>
+);
+
+const ContentSection = ({ section }: {
+  section: {
+    title: string;
+    icon: React.ReactNode;
+    content: {
+      type: string;
+      text?: string;
+      language?: string;
+      items?: string[];
+    }[];
+  };
+}) => {
+  return (
+    <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg animate-fadeIn">
+      <h1 className="text-3xl font-bold mb-6 text-gray-800 border-b pb-4">
+        <div className="flex items-center">
+          {section.icon}
+          <span className="ml-3">{section.title}</span>
+        </div>
+      </h1>
+      <div className="prose prose-lg max-w-none">
+        {section.content.map((block, index) => {
+          switch (block.type) {
+            case 'text':
+              return (
+                <p key={index} className="mb-4 leading-relaxed text-gray-700 animate-slideUp">
+                  {block.text}
+                </p>
+              );
+            case 'code':
+              return (
+                <CodeBlock 
+                  key={index} 
+                  code={block.text} 
+                  language={block.language || 'html'} 
+                />
+              );
+            case 'list':
+              return (
+                <ul key={index} className="list-disc pl-6 space-y-2 mb-4">
+                  {block.items.map((item, i) => (
+                    <li key={i} className="text-gray-700">{item}</li>
+                  ))}
+                </ul>
+              );
+            default:
+              return null;
+          }
+        })}
+      </div>
+    </div>
+  );
+};
+
+const sections = [
+  {
+    title: "Introduction: The Importance of Web Performance Optimization",
+    icon: <Timer className="text-blue-500" size={24} />,
+    content: [
+      {
+        type: "text",
+        text: "Web Performance refers to how fast a website loads and how efficiently it operates for users. Good performance is crucial because it impacts user experience, search rankings, and the overall success of a website."
+      },
+      {
+        type: "text",
+        text: "In today’s digital world, users expect websites to load quickly and be responsive. Performance isn't just a technical requirement—it's directly tied to user experience and SEO rankings. Slow websites often lead to higher bounce rates and lower engagement, which can significantly impact business success. Optimizing web performance is therefore essential for retaining users and providing a seamless browsing experience."
+      },
+      {
+        type: "text",
+        text: "One of the critical factors that affect web performance is how quickly the First Contentful Paint (FCP) and Largest Contentful Paint (LCP) occur. These two metrics are part of Core Web Vitals, a set of performance measurements used by Google to evaluate the user experience on a website."
+      },
+      {
+        title: "Key Web Performance Metrics:",
+        type: "list",
+        items: [
+          "First Contentful Paint (FCP):",
+          "FCP measures how long it takes for the first piece of content (text, image, or canvas) to appear on the screen after the user navigates to the page. A fast FCP gives the user immediate feedback that the page is loading.",
+          "Why It Matters: Users expect content to load quickly. If it takes too long to render anything on the screen, users may get frustrated and leave.",
+          "Largest Contentful Paint (LCP):",
+          "LCP measures the time it takes for the largest visible content element (usually an image or a large block of text) to fully render on the screen. LCP is a good indicator of how quickly the user can see the most meaningful content on a page.",
+          "Why It Matters: A slow LCP can leave users staring at an incomplete or blank page, which leads to poor user experience and higher abandonment rates.",
+        ]
+      },
+      {
+        title: "The Importance of Optimizing These Metrics:",
+        type: "list",
+        items: [
+          "Improved User Experience: Fast page load times reduce frustration and make users more likely to stay on your website.",
+          "Better SEO: Google uses Core Web Vitals, including FCP and LCP, as ranking factors. Sites with better performance are ranked higher in search results.",
+          "Lower Bounce Rates: A website that loads quickly will retain users, preventing them from leaving before the page has fully loaded.",
+        ]
+      }
+    ]
+  },
+  {
+    title: "Lazy Loading Implementation",
+    icon: <Code className="text-green-500" size={24} />,
+    content: [
+      {
+        type: "text",
+        text: "Lazy loading is a technique where certain elements (especially images or videos) load only when they appear in the user's view. This reduces initial load time and makes pages more responsive."
+      },
+      {
+        type: "code",
+        language: "html",
+        text: `<!-- Basic lazy loading example -->
+<img src="image.jpg" loading="lazy" alt="Lazy loaded image">
+
+<!-- Full example with container -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lazy Loading Example</title>
+    <style>
+        .image-container {
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="image-container">
+        <img src="image1.jpg" loading="lazy" alt="Image 1">
+        <img src="image2.jpg" loading="lazy" alt="Image 2">
+        <img src="image3.jpg" loading="lazy" alt="Image 3">
+    </div>
+</body>
+</html>`
+      },
+      {
+        type: "list",
+        items: [
+          "Improves initial load times",
+          "Saves bandwidth by loading only visible content",
+          "Native browser support with loading='lazy'",
+          "Better user experience on slower connections"
+        ]
+      }
+    ]
+  },
+  {
+    title: "Code Splitting Techniques",
+    icon: <Code className="text-purple-500" size={24} />,
+    content: [
+      {
+        type: "text",
+        text: "Code splitting is the practice of dividing your JavaScript files into smaller chunks, loading only the parts that are necessary for a specific page or component."
+      },
+      {
+        type: "code",
+        language: "javascript",
+        text: `// React code splitting example
+import React, { Suspense, lazy } from 'react';
+
+// Lazy load components
+const Home = lazy(() => import('./components/Home'));
+const About = lazy(() => import('./components/About'));
+
+function App() {
+  return (
+    <div className="App">
+      <Suspense fallback={<div>Loading...</div>}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+        </Routes>
+      </Suspense>
+    </div>
+  );
+}`
+      },
+      {
+        type: "list",
+        items: [
+          "Reduces initial bundle size",
+          "Improves application startup time",
+          "Better caching capabilities",
+          "More efficient resource utilization"
+        ]
+      }
+    ]
+  },
+  {
+    title: "Image Optimization",
+    icon: <Image className="text-red-500" size={24} />,
+    content: [
+      {
+        type: "text",
+        text: "Optimizing images involves resizing, compressing, and properly formatting them to make sure they don't take up more space than necessary."
+      },
+      {
+        type: "code",
+        language: "html",
+        text: `<!-- Responsive images example -->
+<img 
+  src="small.jpg" 
+  srcset="
+    small.jpg 300w,
+    medium.jpg 600w,
+    large.jpg 900w
+  "
+  sizes="(max-width: 320px) 280px,
+         (max-width: 640px) 580px,
+         880px"
+  alt="Responsive image"
+>
+
+<!-- CSS for responsive images -->
+<style>
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
 }
+</style>`
+      },
+      {
+        type: "list",
+        items: [
+          "Use appropriate image formats (JPEG, PNG, WebP)",
+          "Implement responsive images using srcset",
+          "Compress images without quality loss",
+          "Consider lazy loading for images",
+          "Use modern image formats like WebP with fallbacks"
+        ]
+      }
+    ]
+  }
+];
+
+const PerformanceGuide = () => {
+  const [currentSection, setCurrentSection] = useState(0);
+  const [showSidebar, setShowSidebar] = useState(true);
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    setProgress((currentSection / (sections.length - 1)) * 100);
+  }, [currentSection]);
+
+  const nextSection = () => {
+    if (currentSection < sections.length - 1) {
+      setCurrentSection(currentSection + 1);
+    }
+  };
+
+  const previousSection = () => {
+    if (currentSection > 0) {
+      setCurrentSection(currentSection - 1);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <ProgressBar progress={progress} />
+      
+      <div className="flex">
+        {/* Sidebar Toggle Button */}
+        <button 
+          onClick={() => setShowSidebar(!showSidebar)}
+          className="fixed top-4 left-4 z-50 p-3 bg-white rounded-full shadow-lg hover:bg-gray-100 transition-colors duration-300"
+        >
+          <Menu size={24} className='text-blue-600' />
+        </button>
+
+        {/* Sidebar */}
+        <div className={`
+          fixed left-0 top-0 h-full w-72 transform transition-transform duration-500 ease-in-out
+          bg-white/80 backdrop-blur-sm shadow-xl z-40 pt-16
+          ${showSidebar ? 'translate-x-0' : '-translate-x-full'}
+        `}>
+          <TableOfContents 
+            sections={sections}
+            currentSection={currentSection}
+            onSectionChange={setCurrentSection}
+          />
+        </div>
+
+        {/* Main Content */}
+        <div className={`flex-1 transition-all duration-500 ${showSidebar ? 'ml-72' : 'ml-0'}`}>
+          <div className="p-8 pt-16">
+            <ContentSection section={sections[currentSection]} />
+            
+            {/* Navigation Buttons */}
+            <div className="flex justify-between mt-8 max-w-4xl mx-auto">
+              <button
+                onClick={previousSection}
+                disabled={currentSection === 0}
+                className={`flex items-center px-6 py-3 rounded-lg transition-all duration-300 transform hover:scale-105 ${
+                  currentSection === 0 
+                    ? 'bg-gray-200 text-gray-500 cursor-not-allowed' 
+                    : 'bg-blue-500 text-white hover:bg-blue-600 shadow-lg'
+                }`}
+              >
+                <ChevronLeft className="mr-2" size={20} />
+                Previous
+              </button>
+              
+              <button
+                onClick={nextSection}
+                disabled={currentSection === sections.length - 1}
+                className={`flex items-center px-6 py-3 rounded-lg transition-all duration-300 transform hover:scale-105 ${
+                  currentSection === sections.length - 1 
+                    ? 'bg-gray-200 text-gray-500 cursor-not-allowed' 
+                    : 'bg-blue-500 text-white hover:bg-blue-600 shadow-lg'
+                }`}
+              >
+                Next
+                <ChevronRight className="ml-2" size={20} />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default PerformanceGuide;
