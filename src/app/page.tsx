@@ -315,15 +315,14 @@ img {
         items: [
           "Largest Contentful Paint (LCP): Should occur within 2.5 seconds for a good user experience",
           "First Input Delay (FID): Should be less than 100 milliseconds",
-          "Cumulative Layout Shift (CLS): Should be less than 0.1",
-          "Total Blocking Time (TBT): Should be under 200 milliseconds",
+          // "Cumulative Layout Shift (CLS): Should be less than 0.1",
           "Time to Interactive (TTI): Should be under 5 seconds"
         ]
       },
-      {
-        type: "text",
-        text: "Performance metrics are measured in two primary ways:"
-      },
+      // {
+      //   type: "text",
+      //   text: "Performance metrics are measured in two primary ways:"
+      // },
       {
         type: "list",
         items: [
@@ -340,6 +339,10 @@ img {
       {
         type: "text",
         text: "Proper font optimization is essential for both performance and visual consistency. Here are best practices for handling web fonts:"
+      },
+      {
+        type: "text",
+        text: "Preloading is a web performance technique that allows developers to prioritize the loading of key resources (like fonts, images, CSS, or JavaScript) early in the page load process. This helps improve performance by ensuring critical assets are available as soon as possible."
       },
       {
         type: "code",
