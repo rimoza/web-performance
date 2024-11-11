@@ -52,7 +52,7 @@ const TableOfContents = ({ sections, currentSection, onSectionChange }:
 
 const CodeBlock = ({ code, language }: 
   {
-    code: string;
+    code?: string;
     language: string;
   }
 ) => (
@@ -102,7 +102,7 @@ const ContentSection = ({ section }: {
             case 'list':
               return (
                 <ul key={index} className="list-disc pl-6 space-y-2 mb-4">
-                  {block.items.map((item, i) => (
+                  {block.items!.map((item, i) => (
                     <li key={i} className="text-gray-700">{item}</li>
                   ))}
                 </ul>
